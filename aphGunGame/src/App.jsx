@@ -26,7 +26,10 @@ function App() {
   const [goalGuns, setGoalGuns] = useState(['green', 'red', 'purple', 'blue', 'white'])
   const [gunCount, setGunCount] = useState(0)
   const [swapCount, setSwapCount] = useState(0)
+  const [gameWon, setGameWon] = useState(false)
   const gameActiveRef = useRef(false)
+  const [hardModeOn, setHardModeOn] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
   const gunImages = {
     'green': greenGunImg,
     'red': redGunImg,
@@ -41,7 +44,7 @@ function App() {
     'blue': blueGunAbilityImg,
     'white': whiteGunAbilityImg,
   }
-  const displayGuns = [...currentGuns, ...userGuns]
+  const displayGuns = hardModeOn ? [...currentGuns, userGuns[0]] : [...currentGuns, ...userGuns]
   const currentAbilityImg = gunAbilityImages[currentGuns[0]]
   
 
@@ -66,6 +69,7 @@ function App() {
     setGoalGuns(newGoalGuns)
     setGunCount(0)
     setSwapCount(0)
+    setGameWon(false)
     gameActiveRef.current = true
   }
 
@@ -100,6 +104,7 @@ function App() {
   useEffect(() => {
     if(currentGuns[0] == goalGuns[0] && currentGuns[1] == goalGuns[1] && userGuns[0] == goalGuns[2] && userGuns[1] == goalGuns[3] && userGuns[2] == goalGuns[4]){
       gameActiveRef.current = false
+      setGameWon(true)
       console.log('GAME WON')
       console.log(gameActiveRef)
     }
@@ -125,11 +130,40 @@ function App() {
 
   return (
     <>
+      {gameWon && (
+        <div className='confetti-container'>
+          {[...Array(50)].map((_, i) => (
+            <div key={i} className='confetti' style={{
+              left: Math.random() * 100 + '%',
+              animationDelay: Math.random() * 0.5 + 's',
+              animationDuration: Math.random() * 2 + 2.5 + 's',
+            }}></div>
+          ))}
+        </div>
+      )}
+      {showSettings && (
+        <div className='modal-overlay' onClick={() => setShowSettings(false)}>
+          <div className='modal' onClick={(e) => e.stopPropagation()}>
+            <h2>Settings</h2>
+            <div className='setting-item'>
+              <label htmlFor='hardMode'>Hard Mode</label>
+              <input
+                id='hardMode'
+                type='checkbox'
+                checked={hardModeOn}
+                onChange={(e) => setHardModeOn(e.target.checked)}
+              />
+            </div>
+            <p className='setting-description'>In hard mode, only 3 guns are visible instead of 5.</p>
+            <button className='close-button' onClick={() => setShowSettings(false)}>Close</button>
+          </div>
+        </div>
+      )}
       <div className='headerContainer'>
         <div className='buttonContainer'>
           <button class='reset' onClick={initGame}><img src={resetIcon}></img></button>
           <button class='info' ><img src={infoIcon}></img></button>
-          <button class='settings'><img src={settingsIcon}></img></button>
+          <button class='settings' onClick={() => setShowSettings(!showSettings)}><img src={settingsIcon}></img></button>
         </div>
         <div className='actionCount'>
           <span>Guns Cycled</span>
