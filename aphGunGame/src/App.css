@@ -1,42 +1,156 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 5rem 2rem 2rem 2rem;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media (max-width: 768px) {
+  #root {
+    padding-top: 280px;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.headerContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  background-color: rgba(45, 138, 110, 0.2);
+  border: 2px solid #9B8B5C;
+  border-radius: 10px;
+  padding: 15px 20px;
 }
 
-.card {
-  padding: 2em;
+.buttonContainer {
+  display: flex;
+  gap: 10px;
 }
 
-.read-the-docs {
-  color: #888;
+.actionCount {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.actionCount span {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.reset img,
+.info img,
+.settings img {
+  width: 20px;
+  height: 20px;
+}
+
+.reset,
+.info,
+.settings {
+  background-color: #2d8a6e;
+}
+
+.goalGuns {
+  border: 2px solid #9B8B5C;
+  border-radius: 20px;
+  padding: 30px 20px 20px 20px;
+  margin: 20px auto;
+  position: relative;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.goalGuns::before {
+  content: 'Goal';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #172856;
+  padding: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.goalGuns img {
+  width: 80px;
+  height: 80px;
+}
+
+.currentGuns {
+  position: relative;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  border: 2px solid #9B8B5C;
+  border-radius: 20px;
+  padding: 30px 20px 20px 20px;
+  margin: 20px auto;
+}
+
+.currentGuns::before {
+  content: 'Loadout';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #172856;
+  padding: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.currentGuns img:nth-child(1) {
+  width: 100px;
+  height: 100px;
+  z-index: 2;
+}
+
+.currentGuns img:nth-child(2) {
+  width: 70px;
+  height: 70px;
+  z-index: 1;
+  transform: rotate(-30deg);
+  margin-left: -60px;
+  margin-top: 55px;
+}
+
+.currentGuns img:nth-child(n+3) {
+  width: 80px;
+  height: 80px;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 20px;
+  position: fixed;
+  bottom: 40px;
+  left: 40px;
+}
+
+.userGunsCircle {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  padding: 20px;
+  box-sizing: border-box;
+  justify-content: center;
+  flex-wrap: wrap;
 }
