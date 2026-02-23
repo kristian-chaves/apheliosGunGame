@@ -32,6 +32,7 @@ function App() {
   const [showSettings, setShowSettings] = useState(false)
   const [neccessaryWins, setNeccessaryWins] = useState(1)
   const [currWins, setCurrWins] = useState(0)
+  const dialogRef = useRef(null)
   const gunImages = {
     'green': greenGunImg,
     'red': redGunImg,
@@ -199,7 +200,15 @@ function App() {
       <div className='headerContainer'>
         <div className='buttonContainer'>
           <button class='reset' onClick={initGame}><img src={resetIcon}></img></button>
-          <button class='info' ><img src={infoIcon}></img></button>
+          <button class='info' onClick={() => dialogRef.current?.showModal()}><img src={infoIcon}></img></button>
+          <dialog ref={dialogRef} className='info-dialog'>
+            <h2>How to Play</h2>
+            <p><strong>Q</strong> - Shoot (cycle main gun)</p>
+            <p><strong>W</strong> - Swap (swap main and offhand)</p>
+            <p><strong>R</strong> - Reset (start new game)</p>
+            <button onClick={() => dialogRef.current?.close()}>Close</button>
+            <p className="smaller-text">Uicons by <a href="https://www.flaticon.com/uicons">Flaticon</a></p>
+          </dialog>
           <button class='settings' onClick={() => setShowSettings(!showSettings)}><img src={settingsIcon}></img></button>
         </div>
         <div className='actionCount'>
