@@ -30,6 +30,8 @@ function App() {
   const gameActiveRef = useRef(false)
   const [hardModeOn, setHardModeOn] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
+  const [neccessaryWins, setNeccessaryWins] = useState(1)
+  const [currWins, setCurrWins] = useState(0)
   const gunImages = {
     'green': greenGunImg,
     'red': redGunImg,
@@ -70,6 +72,7 @@ function App() {
     setGunCount(0)
     setSwapCount(0)
     setGameWon(false)
+    setCurrWins(0)
     gameActiveRef.current = true
   }
 
@@ -103,10 +106,16 @@ function App() {
 
   useEffect(() => {
     if(currentGuns[0] == goalGuns[0] && currentGuns[1] == goalGuns[1] && userGuns[0] == goalGuns[2] && userGuns[1] == goalGuns[3] && userGuns[2] == goalGuns[4]){
-      gameActiveRef.current = false
-      setGameWon(true)
-      console.log('GAME WON')
-      console.log(gameActiveRef)
+      if(neccessaryWins == currWins + 1){
+        gameActiveRef.current = false
+        setGameWon(true)
+        console.log('GAME WON')
+        console.log(gameActiveRef)
+      }
+      else{
+        setCurrWins(currWins+1)
+        shuffleGuns(goalGuns)
+      }
     }
   }, [currentGuns, userGuns, goalGuns]);
 
@@ -155,6 +164,34 @@ function App() {
               />
             </div>
             <p className='setting-description'>In hard mode, only 3 guns are visible instead of 5.</p>
+
+            <div className='setting-divider'></div>
+
+            <div className='setting-item'>
+              <label className='setting-label'># Wins</label>
+              <div className='rounds-options'>
+                <label className='radio-label'>
+                  <input
+                    type='radio'
+                    name='rounds'
+                    value={1}
+                    checked={neccessaryWins === 1}
+                    onChange={() => setNeccessaryWins(1)}
+                  />
+                  1
+                </label>
+                <label className='radio-label'>
+                  <input
+                    type='radio'
+                    name='rounds'
+                    value={5}
+                    checked={neccessaryWins === 5}
+                    onChange={() => setNeccessaryWins(5)}
+                  />
+                  5
+                </label>
+              </div>
+            </div>
             <button className='close-button' onClick={() => setShowSettings(false)}>Close</button>
           </div>
         </div>
